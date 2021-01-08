@@ -3,5 +3,7 @@ venv
 **/__pycache__/**
 .vscode
 .env
+.env.prod
+.env.prod.db
 container_deploy.sh
 *.db

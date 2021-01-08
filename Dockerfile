@@ -17,10 +17,12 @@ ADD ./requirements.txt /tmp/requirements.txt
 # COPY ./requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
-# copy project
-# COPY . /opt/app
+RUN useradd -ms /bin/bash myuser
+USER myuser
+
 ADD ./app /opt/app/
 # run entrypoint.sh
+
 ENTRYPOINT ["/opt/app/entrypoint.sh"]
 
 
@@ -31,7 +33,7 @@ ENTRYPOINT ["/opt/app/entrypoint.sh"]
 # RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
 # ADD ./app /opt/app/
 # # RUN adduser -D myuser
-# WORKDIR /opt/app
 # # USER myuser
+# WORKDIR /opt/app
 # # CMD gunicorn --bind 0.0.0.0:5000 wsgi 
 # ENTRYPOINT ["/opt/app/entrypoint.sh"]
