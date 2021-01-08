@@ -1,25 +1,37 @@
-#Grab the latest alpine image
-FROM alpine:latest
+# pull official base image
+FROM python
 
-# Install python and pip
-RUN apk add --no-cache --update python3 py3-pip bash
-ADD ./requirements.txt /tmp/requirements.txt
-
-# Install dependencies
-RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
-
-# Add our code
-ADD ./app /opt/app/
+# set work directory
+# WORKDIR /usr/src/app
 WORKDIR /opt/app
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Expose is NOT supported by Heroku
-# EXPOSE 5000 		
+# install system dependencies
+RUN apt-get update && apt-get install -y netcat
 
-# Run the image as a non-root user
-RUN adduser -D myuser
-USER myuser
+# install dependencies
+RUN pip install --upgrade pip
+ADD ./requirements.txt /tmp/requirements.txt
+# COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 
-# Run the app.  CMD is required to run on Heroku
-# $PORT is set by Heroku			
-CMD gunicorn --bind 0.0.0.0:$PORT wsgi 
+# copy project
+# COPY . /opt/app
+ADD ./app /opt/app/
+# run entrypoint.sh
+ENTRYPOINT ["/opt/app/entrypoint.sh"]
 
+
+# FROM alpine:latest
+# RUN apk add --no-cache --update python3 py3-pip bash postgresql-dev python3-dev musl-dev gcc
+# ENV DATABASE_URL $DATABASE_URL
+# ADD ./requirements.txt /tmp/requirements.txt
+# RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
+# ADD ./app /opt/app/
+# # RUN adduser -D myuser
+# WORKDIR /opt/app
+# # USER myuser
+# # CMD gunicorn --bind 0.0.0.0:5000 wsgi 
+# ENTRYPOINT ["/opt/app/entrypoint.sh"]
