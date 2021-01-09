@@ -2,11 +2,11 @@ version: "3.7"
 services:
   web:
     build: ./
-    command: gunicorn --bind 0.0.0.0:5000 manage:app
+    command: gunicorn --bind 0.0.0.0:$PORT manage:app
     volumes:
       - ./app/:/opt/app/
     ports:
-      - 5000:5000
+      - $PORT:$PORT
     env_file:
       - ./.env.dev
     depends_on:
@@ -16,8 +16,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=hello_flask
-      - POSTGRES_PASSWORD=hello_flask
-      - POSTGRES_DB=hello_flask_dev
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
 volumes:
   postgres_data:

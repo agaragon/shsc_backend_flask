@@ -24,16 +24,3 @@ ADD ./app /opt/app/
 # run entrypoint.sh
 
 ENTRYPOINT ["/opt/app/entrypoint.sh"]
-
-
-# FROM alpine:latest
-# RUN apk add --no-cache --update python3 py3-pip bash postgresql-dev python3-dev musl-dev gcc
-# ENV DATABASE_URL $DATABASE_URL
-# ADD ./requirements.txt /tmp/requirements.txt
-# RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
-# ADD ./app /opt/app/
-# # RUN adduser -D myuser
-# # USER myuser
-# WORKDIR /opt/app
-# # CMD gunicorn --bind 0.0.0.0:5000 wsgi 
-# ENTRYPOINT ["/opt/app/entrypoint.sh"]
