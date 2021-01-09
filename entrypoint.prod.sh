@@ -10,5 +10,4 @@ then
 
     echo "PostgreSQL started"
 fi
-
-exec "$@"
+exec gunicorn -b :$PORT --access-logfile - --error-logfile - manage:app

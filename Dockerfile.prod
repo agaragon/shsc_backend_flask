@@ -66,5 +66,5 @@ USER app
 
 WORKDIR /home/app/app/app/
 # run entrypoint.prod.sh
-CMD ["gunicorn","--bind","0.0.0.0:$PORT","manage:app"]
-# ENTRYPOINT ["/home/app/app/entrypoint.prod.sh"]
+
+ENTRYPOINT ["/home/app/app/entrypoint.prod.sh"]
