@@ -10,4 +10,8 @@ then
 
     echo "PostgreSQL started"
 fi
+
+exec python manage.py create_db
+exec python manage.py seed_db
+
 exec gunicorn -b :$PORT --access-logfile - --error-logfile - manage:app
